@@ -3,7 +3,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './src/index.ts', // Entry point
+  entry: ['react-hot-loader/patch', './src/index.jsx'], // Entry point
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'), // Output path
@@ -15,19 +15,20 @@ module.exports = {
     open: true, // Automatically opens the browser
   },
   resolve: {
-    extensions: ['.ts', '.js'], // Resolve .ts and .js files
+    extensions: ['.ts', '.js', '.jsx'], // Resolve .ts and .js files
   },
   module: {
     rules: [
       {
-        test: /\.ts$/, // Transpile .ts files
-        use: 'ts-loader',
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
+        use: ['babel-loader'],
       },
       {
         test: /\.css$/, // Load CSS files
         use: ['style-loader', 'css-loader'],
       },
+
     ],
   },
   plugins: [
